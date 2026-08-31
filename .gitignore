@@ -57,6 +57,7 @@ cmake-build-*/
 out/
 build/
 src/test/
+.gradle/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
