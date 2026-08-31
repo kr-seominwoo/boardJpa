@@ -14,11 +14,11 @@
 
                     <th:block th:if="${comment.blind == 0}">
                         <div th:if="${comment.blind == 0}" class="comment">
-                            <div class="nickname">${comment.writer}</div>
-                            <div class="comment_content">${comment.content}</div>
-                            <div class="comment_date">${comment.regdate}</div>
-                            <button class="btn_like_unlike btn_like_unlike_small" onclick="count(this, 'like')">👍</button><span class="like like_unlike_count">${comment.like}</span>
-                            <button class="btn_like_unlike btn_like_unlike_small" onclick="count(this, 'unlike')">👎</button><span class="unlike like_unlike_count">${comment.unlike}</span>
+                            <div class="nickname">[[${comment.writer}]]</div>
+                            <div class="comment_content">[[${comment.content}]]</div>
+                            <div class="comment_date">[[${comment.regdate}]]</div>
+                            <button class="btn_like_unlike btn_like_unlike_small" onclick="count(this, 'like')">👍</button><span class="like like_unlike_count">[[${comment.like}]]</span>
+                            <button class="btn_like_unlike btn_like_unlike_small" onclick="count(this, 'unlike')">👎</button><span class="unlike like_unlike_count">[[${comment.unlike}]]</span>
                             <button class="comment_btn" onclick="toggleReplyWriter(this)">답글</button>
                             <th:block th:if="${member != null && member.id == comment.memberId}">
                                 <button class="comment_btn edit_writer_trigger" onclick="switchCommentToEditor(this)">수정</button>
@@ -26,7 +26,7 @@
                             </th:block>
                         </div>
                         <div th:if="${member != null && member.id == comment.memberId}" class="comment_editor hidden">
-                            <div class="nickname">${member.nickname}</div>
+                            <div class="nickname">[[${member.nickname}]]</div>
                             <textarea class="comment_input_area" rows="1" placeholder="댓글을 입력하세요"
                             onkeyup="resize(this)"></textarea>
                             <div class="comment_btn_box">
