@@ -58,6 +58,7 @@ out/
 build/
 src/test/
 .gradle/
+LOG_PATH_IS_UNDEFINED/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
