@@ -5,7 +5,6 @@ import org.hibernate.annotations.DynamicInsert;
 
 import java.util.Date;
 
-//@Table(name = "comment")
 @Entity(name="comment")
 @DynamicInsert
 public class Comment {
