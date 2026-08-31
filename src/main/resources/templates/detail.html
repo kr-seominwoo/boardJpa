@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th=http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세</title>
+    <link rel="stylesheet" href="/community/css/detail.css">
+    <link rel="stylesheet" href="/community/css/comment.css">
+
+    <script src="https://kit.fontawesome.com/012cf477c7.js"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="header"></div>
+<div class="container">
+    <div class="content_banner">
+        <th:block th:switch="${post.category}">
+            <h1 th:case="'free'">자유</h1>
+            <h1 th:case="'game'">게임</h1>
+            <h1 th:case="'sports'">스포츠</h1>
+            <h1 th:case="'pet'">애완동물</h1>
+            <h1 th:case="'it_finance'">IT/금융</h1>
+        </th:block>
+    </div>
+    <header>
+        <div class="post_header">
+            <h3 th:utext="${post.title}"></h3>
+            <!--				<h3 th:utext="${post.title}"><c:out value="${post.title}" escapeXml="true" /></h3>-->
+            <div class="post_info_box">
+                <div>
+                    <span th:text="${post.writer}"></span> <span> | </span> <span th:text="${post.regdate}"></span>
+                </div>
+                <div>
+                    <span>조회수 [[${post.hit}]]</span> <span> | </span> <span>좋아요 [[${post.likes}]]</span> <span>
+							| </span> <span>싫어요 [[${post.unlike}]]</span> <span> | </span>
+                </div>
+            </div>
+            <div id="category" class="hidden" th:text="${post.category}"></div>
+            <div id="post_id" class="hidden" th:text="${post.postId}"></div>
+
+        </div>
+    </header>
+    <div class="post_content" style="white-space: pre" th:text="${post.content}"></div>
+    <div class="like_unlike_wrap">
+        <button class="btn_like_unlike btn_like_unlike_big">👍</button>
+        <button class="btn_like_unlike btn_like_unlike_big">👎</button>
+    </div>
+    <div th:if="${memberId == post.memberId}" class="btn_box">
+        <a th:href="@{/board/edit/{category}/{subCategory}/{postId}(category=${category}, subCategory=${subCategory}, postId=${post.postId})}" class="comment_btn">수정</a>
+        <form th:action="@{/board/delete/{category}/{subCategory}/{postId}(category=${category},subCategory=${subCategory}, postId=${post.postId})}" method="post">
+            <button class="comment_btn">삭제</button>
+        </form>
+<!--        <a th:href="@{/board/delete/{category}/{postId}(category=${category}, postId=${post.postId})}" class="comment_btn">삭제</a>-->
+    </div>
+
+    <div class="comment_box">
+    </div>
+
+</div>
+<script src="/community/js/jquery.js"></script>
+<script src="/community/js/resize.js"></script>
+<script src="/community/js/comment.js"></script>
+</body>
+</html>

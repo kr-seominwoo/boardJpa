@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+@font-face {
+    font-family: "malangmalang-bold";
+    src: url(../fonts/HancomMalangMalang-Bold.ttf);
+}
+@font-face {
+    font-family: "HMFMMUEX";
+    src: url(../fonts/HMFMMUEX.TTC);
+}
+
+.comment_box {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.comment_header {
+    font-family: "HMFMMUEX";
+    border-bottom: solid 2px rgb(124,129,166);
+}
+
+.comment_group {
+    border-bottom: 1px solid rgb(153,153,153,0.5);
+}
+
+.comment_list {
+    margin: 0;
+}
+
+.comment_item {
+    padding: 5px 0 0 0;
+}
+
+.comment_area {
+	display: flex;
+}
+
+.comment_wrap {
+    width: 100%;
+}
+
+.comment_reply_symbol {
+    margin-right: 5px;
+}
+
+.nickname {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.comment_content {
+    font-size: 13px;
+    white-space: pre-line;
+}
+
+.comment_date {
+    font-size: 13px;
+    color: gray;
+}
+
+.comment_writer {
+    margin: 8px 8px 8px 0px;
+    padding: 10px;
+    border: 2px solid rgb(153,153,153,0.5);
+}
+
+.comment_editor {
+    margin: 8px 8px 8px 0px;
+    padding: 10px;
+    border: 2px solid rgb(153,153,153,0.5);
+}
+
+.comment_input_area {
+    margin-top: 10px;
+    width: 100%;
+    max-height: 500px;
+    border: none;
+    resize: none;
+    outline: none;
+}
+
+.comment_btn_box {
+    display: flex;
+    justify-content: right;
+}
+
+.comment_btn {
+	font-family: "HMFMMUEX";
+    border: 2px solid  rgb(178, 188, 220);
+    border-radius: 10px;
+    color: rgb(68,68,68);
+    background-color: white;
+    font-size: 13px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.comment_btn:hover {
+    color: white;
+    background-color: rgb(178, 188, 220);
+}
+
+.page_box {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.page_box ul {
+    padding: 0;
+}
+
+.page_box li {
+    display: inline;
+    margin: 2px;
+    color: rgb(124,129,166);
+}
+
+.page_active {
+    border-bottom: 1px solid rgb(124,129,166);
+}
+
+.page {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.blank_bottom {
+	margin-bottom: 5px;
+}
+
+.like_unlike_count {
+    font-size: 13px;  
+}

@@ -1,0 +1,149 @@
+@font-face {
+    font-family: "malangmalang-bold";
+    src: url(../fonts/HancomMalangMalang-Bold.ttf);
+}
+
+/* div {
+    display: block;
+} */
+
+html, body{
+    font-family: "malangmalang-bold";
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+ul {
+    list-style: none;
+}
+
+header {
+    padding-top: 100px;
+    padding-left: 12px;
+    color : rgb(172, 164, 211)
+}
+
+.header_inner {
+    width: 605px;
+    margin: 0 auto;
+    font-size: 60px;
+}
+
+.header_inner > h1 {
+    margin: 0;
+}
+
+.logo {
+    height: 45px;
+    width: 45px;
+}
+
+/*
+로그인 css
+*/
+.login_wrap {
+    color : rgb(172, 164, 211);
+    width: 400px;
+    height: fit-content;
+    margin: 0 auto;
+    border: 0.68mm rgb(172, 164, 211, 0.5) solid;
+    border-radius: 5px;
+    padding: 100px;
+}
+
+.id_pw_wrap{
+    width: 100%;
+    height: 100%;
+    
+    border-radius: 5px;
+}
+
+.id_pw_wrap .input_row {
+    width: 100%;
+    height: 48px;
+    text-align: center; 
+    margin: 0 auto;
+}
+
+.input_row input {
+    font-family: "malangmalang-bold";
+    border: 0;
+    border-bottom: 2px solid rgb(124, 129, 166);
+    width: 396.02px;
+    font-size: 18px;
+    color: rgb(68,68,68);
+}
+
+.input_row input:focus {
+    outline: none;
+}
+
+input::placeholder {
+    font-family: "malangmalang-bold";
+    color: rgb(195,195,195);
+    text-indent: 5px;
+}
+
+.btn_wrap {
+    text-align: center;
+    padding-bottom: 6.5px;
+}
+
+.btn_login {
+    color: white;
+    font-family: "malangmalang-bold";
+    width: 100%;
+    height: 60px;
+    background-color: rgb(176,187,219);
+    border: 0;
+    font-size: 30px;
+    border-radius: 5px;
+}
+
+
+input, button {
+    cursor: pointer;
+}
+
+.login_keep_wrap {
+    font-family: "malangmalang-bold";
+    color: rgb(176,187,219);
+    padding-bottom: 10px;
+}
+
+.login_keep_wrap input[type="checkbox"] + label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(176,187,219);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    top: 6px;
+    margin-right: 5px;
+}
+
+.login_keep_wrap input[type="checkbox"]:checked + label:after {
+    position: relative;
+    top: -4px;
+    left: 2px;
+    content: '\2714';
+    font-size: 20px;
+}
+
+.login_keep_wrap input[type="checkbox"] {
+    display: none;
+}
+
+.find_wrap a {
+    text-decoration: none;
+    font-size: 15px;
+    color:rgb(195, 195, 195)
+}
+
+#regist {
+    float: right;
+}
+

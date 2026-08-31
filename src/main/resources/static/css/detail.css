@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+@font-face {
+    font-family: "malangmalang-bold";
+    src: url(../fonts/HancomMalangMalang-Bold.ttf);
+}
+@font-face {
+    font-family: "HMFMMUEX";
+    src: url(../fonts/HMFMMUEX.TTC);
+}
+
+body {
+    font-family: "HMFMMUEX";
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+/*  */
+ul {
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+h1 {
+    margin: 0;
+    margin-left: 10px;
+}
+
+h3 {
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+select {
+    border: none;
+    border-bottom: 0.68mm rgb(124,129,166) solid;
+    text-align: center;
+    color: rgb(124,129,166);
+    width: 110px;
+    font-size: 17px;
+}
+
+
+
+.container {
+    width: 1000px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.content_banner {
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    width: 1000px;
+    color: rgb(124,129,166);
+    margin-bottom: 10px;
+}
+
+.post_header {
+    width: 1000px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: solid 4px rgb(124,129,166);
+    border-bottom: solid 2px rgb(153,153,153,0.5);
+    
+}
+
+.post_info_box {
+    display:flex;
+    justify-content: space-between;
+}
+
+.post_content {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.like_unlike_wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.btn_like_unlike_small {
+	width: 26px;
+    height: 26px;
+    font-size: 13px;
+}
+
+.btn_like_unlike_big {
+	width: 40px;
+    height: 40px;
+    font-size: 20px;
+}
+
+.btn_like_unlike {
+    background-color: white;
+    border: 0;
+    margin: 2px;
+    border-radius: 50%;
+    padding: 0;    
+}
+
+.btn_like_unlike:hover {
+    background-color: rgb(172,164,211);
+}
+
+.btn_box {
+	display: flex;
+	justify-content: right;
+}
+
+.post_content {
+    font-family: 'Ubuntu', sans-serif;
+}
+

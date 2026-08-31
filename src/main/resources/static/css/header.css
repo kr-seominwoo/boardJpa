@@ -1,0 +1,152 @@
+header {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+#blackbox {
+    position: absolute;
+    width: 100%;
+    min-width: 1500px;
+    height: 120px;
+    background-color: white;
+    z-index: 3;
+}
+
+#logout_button {
+    font-family: "HMFMMUEX";
+    padding : 0;
+    margin: 0;
+    border: none;
+    background-color: white;
+    color: rgb(195,195,195);
+    font-size: 16px;
+}
+
+.title_menu_wrap {
+    display: flex;
+    width: 98%;
+    height: 50px;
+    margin: 0 auto;
+    z-index: 4;
+}
+
+.logo {
+    vertical-align: bottom;
+    height: 45px;
+    width: 45px;
+}
+
+.title {
+    margin-right:auto;
+    font-family: "malangmalang-bold";
+    font-size: 40px;
+    color: rgb(172,164,211);    
+    z-index: 4;
+}
+
+.menu {
+    display: flex;
+    padding: 0;
+    margin-bottom: 0;   
+    color: rgb(195,195,195); 
+}
+
+.user_menu {
+    margin-left: auto;
+    display: flex;
+    align-items: flex-end;
+}
+
+.user_menu_active {
+    color: rgb(124,129,166);
+}
+
+.user_menu li {
+    padding-left: 30px;
+    z-index: 4;
+}
+
+.category_list_box {
+    margin: 0 auto;
+    z-index: 4;
+}
+
+.category_list {
+    text-align: center;    
+    width: 100%;
+    height : 100%;
+}
+
+.category_list > li {
+    width: 200px;
+    text-align: center;    
+    color: rgb(124,129,166);
+    font-size: 35px;
+}
+
+.category_box {
+    display: flex;
+    height: 72px;
+    width: 200px;    
+    align-items: flex-end;
+}
+
+.category_list_box {
+    height: 72px;
+}
+
+
+.category {
+    background-color: rgb(172,164,211);
+    width: 200px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+}
+
+.category_list_item:hover .category {
+    color: white;
+    margin-bottom: 3px;
+    margin-right: 2px;
+    box-shadow: 1px 2px 2px 2px gray;
+    transition: 1s;
+}
+
+.category_detail > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 199px;
+    height: 40px;
+    font-size: 20px;
+    color: black;
+    outline: 1px rgb(235,222,230) solid;
+    box-sizing: border-box;
+}
+
+.category_list_item {
+    position: relative;
+}
+
+.category_detail {
+    position: absolute;
+    left: 0;
+    top: -200%;
+    transition: all 1s;
+    z-index: 2;
+}
+
+.category_list > li:hover .category_detail {
+    top: 70px;
+}
+
+.category > a {
+	color: rgb(124,129,166);
+}
+
+.category_active {
+    color: white !important;
+}
