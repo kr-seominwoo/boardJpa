@@ -11,6 +11,7 @@ import com.board.entity.Member;
 import com.board.entity.Post;
 
 import com.board.repository.jpa.comment.CommentDTO;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.board.repository.CommentRepository;
@@ -24,6 +25,7 @@ public class CommentService {
 		this.commentRepository = commentRepository;
 	}
 
+	@Transactional
 	public Comment createComment(Member member, CommentForm commentForm) {
 		Comment comment = null;
 

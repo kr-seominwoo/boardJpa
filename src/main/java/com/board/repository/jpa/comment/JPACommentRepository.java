@@ -27,46 +27,16 @@ public class JPACommentRepository implements CommentRepository {
 
     @Override
     public Long insertComment(Member member, CommentForm commentForm) {
-//        Long parentId, Long postId, String memberId, String writer, String content
-//        Comment comment = new Comment(commentForm.get);
+        Comment comment = new Comment(commentForm.getParentId(), commentForm.getPostId(),
+                member.getId(), member.getNickname(), commentForm.getContent());
 
-
-        String sql = "INSERT INTO " + commentForm.getCategory()
-                + "_COMMENT(MEMBER_ID, WRITER, CONTENT, POST_ID, PARENT_ID) VALUES(?,?,?,?,?)";
-        String[] col = { "COMMENT_ID" };
-
-        Long result = 0L;
-//        Connection con = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet rs = null;
-//
-//        try {
-//            con = DataSourceUtils.getConnection(dataSource);
-//            preparedStatement = con.prepareStatement(sql, col);
-//            preparedStatement.setString(1, member.getId());
-//            preparedStatement.setString(2, member.getNickname());
-//            preparedStatement.setString(3, commentForm.getContent());
-//            preparedStatement.setLong(4, commentForm.getPostId());
-//            preparedStatement.setLong(5, commentForm.getParentId());
-//
-//            result = (long) preparedStatement.executeUpdate();
-//            rs = preparedStatement.getGeneratedKeys();
-//            if (rs != null && rs.next()) {
-//                result = rs.getLong(1);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            result = 0L;
-//        } finally {
-//            close(rs, preparedStatement, con);
-//        }
-
-        return result;
+        em.persist(comment);
+        return comment.getId();
     }
 
     @Override
     public Comment findOne(String category, Long commentId) {
-        String sql = "SELECT c FROM comment c where c.commentId =:commentId";
+        String sql = "SELECT c FROM comment c where c.id =:commentId";
         return em.createQuery(sql, Comment.class)
                 .setParameter("commentId", commentId)
                 .getSingleResult();
