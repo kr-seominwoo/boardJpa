@@ -31,7 +31,7 @@ public class CommentService {
 
 		Long id = commentRepository.insertComment(member, commentForm);
 		if (id != 0) {
-			comment = commentRepository.findOne(commentForm.getCategory(), id);
+			comment = commentRepository.findOne(id);
 		}
 
 		return comment;
@@ -41,9 +41,9 @@ public class CommentService {
 		return commentRepository.findComments(postId, page);
 	}
 
-	public List<CommentDTONode> findReplyComments(String category, Long postId, Long parentId) {
+	public List<CommentDTONode> findReplyComments(Long postId, Long parentId) {
 		List<CommentDTONode> nodes = new ArrayList<>();
-		List<CommentDTO> list = commentRepository.findReplyComments(category, postId, parentId);
+		List<CommentDTO> list = commentRepository.findReplyComments(postId, parentId);
 		for (int idx = 0, SIZE = list.size(); idx < SIZE; ++idx) {
 			CommentDTO comment = list.get(idx);
 			int level = comment.getLevel();
@@ -81,27 +81,35 @@ public class CommentService {
 	}
 
 	public Long findCommentTotal(String category, Long postId) {
-		return commentRepository.findTotalCount(category, postId);
+		return commentRepository.findTotalCount(postId);
 	}
 
 	public Long findTopCommentTotal(String category, Long postId) {
-		return commentRepository.findTopTotalCount(category, postId);
+		return commentRepository.findTopTotalCount(postId);
 	}
 
 	public CommentDTO updateContent(Member member, String category, Long commentId, String content) {
 		CommentDTO result = null;
 		if(commentRepository.updateContent(category, commentId, content) == 1) {
-			Comment comment = commentRepository.findOne(category, commentId);
-			result = new CommentDTO(comment.getId(), comment.getMemberId(), comment.getWriter(), comment.getContent(), comment.getRegdate(), comment.getLikes(), comment.getUnlike(), 0, comment.getBlind());
+			Comment comment = commentRepository.findOne(commentId);
+			result = new CommentDTO(comment.getId(), comment.getMemberId(), comment.getWriter(), comment.getContent(), comment.getRegdate(), comment.getLikes(), comment.getDislike(), 0, comment.getBlind());
 		}
 
 		return result;
 	}
 
-	public int updateCount(String category, String column, Long commentId) {
-		commentRepository.updateCount(category, column, commentId);
-		int count = commentRepository.findCount(category, column, commentId);
-		return count;
+	@Transactional
+	public int like(Long commentId) {
+		Comment comment = commentRepository.findOne(commentId);
+		comment.incrementLikes();
+		return comment.getLikes();
+	}
+
+	@Transactional
+	public int dislike(Long commentId) {
+		Comment comment = commentRepository.findOne(commentId);
+		comment.incrementDisLike();
+		return comment.getDislike();
 	}
 
 	public int deleteComment(Member member, String category, Long commentId) {
@@ -109,7 +117,7 @@ public class CommentService {
 	}
 
 	public boolean isMyComment(Member member, String category, Long commentId) {
-		Comment comment = commentRepository.findOne(category, commentId);
+		Comment comment = commentRepository.findOne(commentId);
 		if (comment.getMemberId().equals(member.getId())) {
 			return true;
 		} else {

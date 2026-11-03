@@ -9,8 +9,8 @@
     <div class="nickname">[[${comment.writer}]]</div>
     <div class="comment_content">[[${comment.content}]]</div>
     <div class="comment_date">[[${comment.regdate}]]</div>
-    <button class="btn_like_unlike btn_like_unlike_small" onclick="count(this, 'like')">👍</button><span class="like_unlike_count">[[${comment.like}]]</span>
-    <button class="btn_like_unlike btn_like_unlike_small" onclick="count(this, 'unlike')">👎</button><span class="like_unlike_count">[[${comment.unlike}]]</span>
+    <button class="btn_like_unlike btn_like_unlike_small" onclick="like(this)">👍</button><span class="like_unlike_count">[[${comment.like}]]</span>
+    <button class="btn_like_unlike btn_like_unlike_small" onclick="dislike(this)">👎</button><span class="like_unlike_count">[[${comment.unlike}]]</span>
     <button class="comment_btn reply_writer_trigger" onclick="toggleReplyWriter(this)">답글</button>
     <th:if test="${member != null && member.id == comment.memberId}">
     <button class="comment_btn edit_writer_trigger" onclick="switchCommentToEditor(this)">수정</button>

@@ -11,12 +11,12 @@ import com.board.repository.jpa.comment.CommentDTO;
 
 public interface CommentRepository {
 	Long insertComment(Member member, CommentForm commentForm);
-	Comment findOne(String category, Long commentId);
+	Comment findOne(Long commentId);
 	List<CommentDTO> findComments(Long postId, int page);
-	List<CommentDTO> findReplyComments(String category, Long postId, Long parentId);
+	List<CommentDTO> findReplyComments(Long postId, Long parentId);
 	Map<Long, Integer> findCounts(List<Post> postList, String category);
-	Long findTotalCount(String category, Long postId);
-	Long findTopTotalCount(String category, Long postId);	
+	Long findTotalCount(Long postId);
+	Long findTopTotalCount(Long postId);
 	int findCount(String category, String column, Long commentId);
 	int updateCount(String category, String column, Long commentId);
 	int updateContent(String category, Long commentId, String content);

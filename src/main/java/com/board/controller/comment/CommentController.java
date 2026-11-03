@@ -80,7 +80,7 @@ public class CommentController {
 			mv.addObject("member", member);
 			mv.setViewName("replyComment");
 			CommentDTO commentDTO = new CommentDTO(comment.getId(), comment.getMemberId(), comment.getWriter(),
-					comment.getContent(), comment.getRegdate(), comment.getLikes(), comment.getUnlike(), 0,
+					comment.getContent(), comment.getRegdate(), comment.getLikes(), comment.getDislike(), 0,
 					comment.getBlind());
 			mv.addObject("comment", commentDTO);
 		}
@@ -120,7 +120,7 @@ public class CommentController {
 		Member member = LoginCheck.getMemberFromSession(request);
 		model.addAttribute("member", member);
 
-		List<CommentDTONode> list = commentService.findReplyComments(category, postId, commentId);
+		List<CommentDTONode> list = commentService.findReplyComments(postId, commentId);
 		model.addAttribute("list", list);
 		return "replyCommentList";
 	}
@@ -132,9 +132,15 @@ public class CommentController {
 	}
 
 	@ResponseBody
-	@PostMapping("/count")
-	public int up(@PathVariable String category, String column, Long commentId) {
-		return commentService.updateCount(category, column.toUpperCase(), commentId);
+	@PostMapping("/likes")
+	public int likes(Long commentId) {
+		return commentService.like(commentId);
+	}
+
+	@ResponseBody
+	@PostMapping("/dislike")
+	public int dislike(Long commentId) {
+		return commentService.dislike(commentId);
 	}
 
 	@PostMapping("/update/{commentId}")

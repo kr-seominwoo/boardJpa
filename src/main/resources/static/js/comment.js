@@ -119,7 +119,6 @@ function editComment(target) {
 
 	const comment = getCommentFromCommentItem(commentItem);
 	const url = "/community/board/"+ category + "/" + postId +"/comment/update/" + commentId;
-	console.log("update url : " + url);
 
 	$.ajax({
 		type : 'post',
@@ -143,13 +142,11 @@ function deleteComment(target) {
 	const commentItem = $(target).closest(".comment_item");
 	const commentId = commentItem.attr("id");
 	const url = "/community/board/"+ category + "/" + postId +"/comment/delete/" + commentId;
-	console.log("delete url : " + url);
 
 	$.ajax({
 		type : 'post',
 		url : url,
 		success : function() {
-			console.log("delete");
 			const commentWrap = commentItem.children().children(".comment_wrap");
 			const comment = commentWrap.children(".comment");
 			comment.html('<div class="comment_content">삭제된 댓글입니다</div');
@@ -170,25 +167,66 @@ function getCommentFromCommentItem(commentItem) {
 	return comment = commentItem.children().children().children(".comment");
 }
 
-function count(button, column) {
+function like(button) {
+    const category = $('#category').text();
+    const postId = $('#post_id').text();
+    const commentItem = $(button).closest(".comment_item");
+    const commentId = commentItem.attr("id");
+
+    const url = "/community/board/"+ category + "/" + postId +"/comment/likes";
+
+    $.ajax({
+        type : 'post',
+        url : url,
+        dataType : 'text',
+        data: {"commentId" : commentId},
+        success : function(data) {
+            const count = $(button).next();
+            count.text(data);
+        }
+    });
+}
+
+function dislike(button) {
 	const category = $('#category').text();
 	const postId = $('#post_id').text();
 	const commentItem = $(button).closest(".comment_item");
 	const commentId = commentItem.attr("id");
 
-	const url = "/community/board/"+ category + "/" + postId +"/comment/count";
+	const url = "/community/board/"+ category + "/" + postId +"/comment/dislike";
 
 	$.ajax({
 		type : 'post',
 		url : url,
 		dataType : 'text',
-		data: {"column" : column, "commentId" : commentId},
+		data: {"commentId" : commentId},
 		success : function(data) {
 			const count = $(button).next();
 			count.text(data);
 		}
 	});
 }
+
+// likes와 dislike를 하나의 reaction으로 처리하는 경우
+//function count(button, column) {
+//	const category = $('#category').text();
+//	const postId = $('#post_id').text();
+//	const commentItem = $(button).closest(".comment_item");
+//	const commentId = commentItem.attr("id");
+//
+//	const url = "/community/board/"+ category + "/" + postId +"/comment/count";
+//
+//	$.ajax({
+//		type : 'post',
+//		url : url,
+//		dataType : 'text',
+//		data: {"column" : column, "commentId" : commentId},
+//		success : function(data) {
+//			const count = $(button).next();
+//			count.text(data);
+//		}
+//	});
+//}
 
 $(window).on('load', function() {
 	const category = $('#category').text();

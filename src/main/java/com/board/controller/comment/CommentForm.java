@@ -5,7 +5,7 @@ public class CommentForm {
 	private Long parentId;
 	private String category;	
 	private String content;
-	
+
 	public CommentForm(Long postId, Long parentId, String category, String content) {
 		this.postId = postId;
 		this.parentId = parentId;

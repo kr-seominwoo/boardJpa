@@ -19,7 +19,7 @@ public class Comment {
 	private Date regdate;
 
 	private int likes;
-	private int unlike;
+	private int dislike;
 	private int blind;
 
 	public Comment() {
@@ -66,11 +66,19 @@ public class Comment {
 		return likes;
 	}
 
-	public int getUnlike() {
-		return unlike;
+	public int getDislike() {
+		return dislike;
 	}
 
 	public int getBlind() {
 		return blind;
+	}
+
+	public void incrementLikes() {
+		this.likes += 1;
+	}
+
+	public void incrementDisLike() {
+		this.dislike += 1;
 	}
 }

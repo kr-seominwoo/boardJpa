@@ -35,7 +35,7 @@ public class JPACommentRepository implements CommentRepository {
     }
 
     @Override
-    public Comment findOne(String category, Long commentId) {
+    public Comment findOne(Long commentId) {
         String sql = "SELECT c FROM comment c where c.id =:commentId";
         return em.createQuery(sql, Comment.class)
                 .setParameter("commentId", commentId)
@@ -90,7 +90,7 @@ public class JPACommentRepository implements CommentRepository {
             Comment c = list.get(i);
             CommentDTO dto = new CommentDTO(c.getId(), c.getMemberId(), c.getWriter(),
                     c.getContent(), c.getRegdate(), c.getLikes(),
-                    c.getUnlike(), 0, c.getBlind());
+                    c.getDislike(), 0, c.getBlind());
             result.add(dto);
         }
 
@@ -133,11 +133,12 @@ public class JPACommentRepository implements CommentRepository {
     }
 
     @Override
-    public List<CommentDTO> findReplyComments(String category, Long postId, Long parentId) {
-        String sql = "SELECT c.*, level as \"level\" \r\n" + "  FROM " + category + "_COMMENT c \r\n"
-                + "  WHERE POST_ID =:postId \r\n" + "  START WITH PARENT_ID =:parentId \r\n"
-                + "  CONNECT BY PARENT_ID = PRIOR COMMENT_ID" + "  ORDER BY REGDATE";
+    public List<CommentDTO> findReplyComments(Long postId, Long parentId) {
+//        String sql = "SELECT c.*, level as \"level\" \r\n" + "  FROM " + category + "_COMMENT c \r\n"
+//                + "  WHERE POST_ID =:postId \r\n" + "  START WITH PARENT_ID =:parentId \r\n"
+//                + "  CONNECT BY PARENT_ID = PRIOR COMMENT_ID" + "  ORDER BY REGDATE";
 
+        String sql = "";
         return em.createQuery(sql, CommentDTO.class)
                 .setParameter("postId", postId)
                 .setParameter("parentId", parentId)
@@ -201,8 +202,8 @@ public class JPACommentRepository implements CommentRepository {
     }
 
     @Override
-    public Long findTotalCount(String category, Long postId) {
-        String sql = "SELECT COUNT(COMMENT_ID) AS COUNT FROM " + category + "_COMMENT WHERE POST_ID = ?";
+    public Long findTotalCount(Long postId) {
+//        String sql = "SELECT COUNT(COMMENT_ID) AS COUNT FROM " + category + "_COMMENT WHERE POST_ID = ?";
 
         long count = 0L;
 
@@ -212,9 +213,9 @@ public class JPACommentRepository implements CommentRepository {
     }
 
     @Override
-    public Long findTopTotalCount(String category, Long postId) {
-        String sql = "SELECT COUNT(COMMENT_ID) AS COUNT FROM " + category
-                + "_COMMENT WHERE POST_ID = ? AND PARENT_ID = 0";
+    public Long findTopTotalCount(Long postId) {
+//        String sql = "SELECT COUNT(COMMENT_ID) AS COUNT FROM " + category
+//                + "_COMMENT WHERE POST_ID = ? AND PARENT_ID = 0";
 
         long count = 0L;
 
