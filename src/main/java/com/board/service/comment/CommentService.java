@@ -112,16 +112,19 @@ public class CommentService {
 		return comment.getDislike();
 	}
 
+	@Transactional
 	public int deleteComment(Member member, String category, Long commentId) {
-		return commentRepository.deleteComment(category, commentId);
+		if (isMyComment(member, commentId)) {
+			Comment comment = commentRepository.findOne(commentId);
+			comment.blindComment();
+			return 1;
+		}
+
+		return 0;
 	}
 
-	public boolean isMyComment(Member member, String category, Long commentId) {
+	public boolean isMyComment(Member member, Long commentId) {
 		Comment comment = commentRepository.findOne(commentId);
-		if (comment.getMemberId().equals(member.getId())) {
-			return true;
-		} else {
-			return false;
-		}
+        return comment.getMemberId().equals(member.getId());
 	}
 }

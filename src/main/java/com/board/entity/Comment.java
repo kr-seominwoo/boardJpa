@@ -81,4 +81,8 @@ public class Comment {
 	public void incrementDisLike() {
 		this.dislike += 1;
 	}
+
+	public void blindComment() {
+		this.blind = 1;
+	}
 }

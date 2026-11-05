@@ -154,7 +154,7 @@ public class CommentController {
 			return mv;
 		}
 
-		if (!commentService.isMyComment(member, category, commentId)) {
+		if (!commentService.isMyComment(member, commentId)) {
 			mv.setStatus(HttpStatus.UNAUTHORIZED);
 			mv.addObject("message", CommentErrorMessage.MY_COMMENT_ERROR);
 			mv.setViewName("error");
@@ -183,7 +183,7 @@ public class CommentController {
 			return new ResponseEntity<String>(CommentErrorMessage.LOGIN_ERROR, HttpStatus.UNAUTHORIZED);
 		}
 
-		if (!commentService.isMyComment(member, category, commentId)) {
+		if (!commentService.isMyComment(member, commentId)) {
 			return new ResponseEntity<String>(CommentErrorMessage.MY_COMMENT_ERROR, HttpStatus.UNAUTHORIZED);
 		}
 
