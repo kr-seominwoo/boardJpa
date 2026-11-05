@@ -187,7 +187,7 @@ public class CommentController {
 			return new ResponseEntity<String>(CommentErrorMessage.MY_COMMENT_ERROR, HttpStatus.UNAUTHORIZED);
 		}
 
-		int result = commentService.deleteComment(member, category, commentId);
+		int result = commentService.deleteComment(member, commentId);
 		if (result == 0) {
 			return new ResponseEntity<String>(CommentErrorMessage.SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

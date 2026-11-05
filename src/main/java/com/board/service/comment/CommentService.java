@@ -113,7 +113,7 @@ public class CommentService {
 	}
 
 	@Transactional
-	public int deleteComment(Member member, String category, Long commentId) {
+	public int deleteComment(Member member, Long commentId) {
 		if (isMyComment(member, commentId)) {
 			Comment comment = commentRepository.findOne(commentId);
 			comment.blindComment();
