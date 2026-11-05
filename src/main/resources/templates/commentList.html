@@ -37,7 +37,7 @@
 
                         <div class="comment_writer hidden">
                             <th:block th:if="${member != null && member.id != null}">
-                                <div class="nickname">${member.nickname}</div>
+                                <div class="nickname">[[${member.nickname}]]</div>
                                 <textarea class="comment_input_area" rows="1" placeholder="댓글을 입력하세요"
                                           onkeyup="resize(this)"></textarea>
                                 <div class="comment_btn_box">
