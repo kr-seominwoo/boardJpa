@@ -183,6 +183,8 @@ function like(button) {
         success : function(data) {
             const count = $(button).next();
             count.text(data);
+        }, error : function(response) {
+            processError(response, category, postId);
         }
     });
 }
@@ -203,7 +205,9 @@ function dislike(button) {
 		success : function(data) {
 			const count = $(button).next();
 			count.text(data);
-		}
+		}, error : function(response) {
+            processError(response, category, postId);
+        }
 	});
 }
 

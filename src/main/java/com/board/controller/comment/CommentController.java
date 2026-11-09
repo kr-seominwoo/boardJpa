@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.board.entity.Comment;
 import com.board.entity.Member;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -131,16 +132,34 @@ public class CommentController {
 		return commentService.findCommentTotal(category, postId);
 	}
 
-	@ResponseBody
 	@PostMapping("/likes")
-	public int likes(Long commentId) {
-		return commentService.like(commentId);
+	public ModelAndView likes(Long commentId, ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
+		Member member = LoginCheck.getMemberFromSession(request);
+		if (!LoginCheck.isLoggedIn(member)) {
+			mv.addObject("message", CommentErrorMessage.LOGIN_ERROR);
+			mv.setViewName("error");
+			mv.setStatus(HttpStatus.UNAUTHORIZED);
+		} else {
+			int currentLike = commentService.like(commentId);
+			mv.addObject(currentLike);
+		}
+
+		return mv;
 	}
 
-	@ResponseBody
 	@PostMapping("/dislike")
-	public int dislike(Long commentId) {
-		return commentService.dislike(commentId);
+	public ModelAndView dislike(Long commentId, ModelAndView mv, HttpServletRequest request, HttpServletResponse response) {
+		Member member = LoginCheck.getMemberFromSession(request);
+		if (!LoginCheck.isLoggedIn(member)) {
+			mv.addObject("message", CommentErrorMessage.LOGIN_ERROR);
+			mv.setViewName("error");
+			mv.setStatus(HttpStatus.UNAUTHORIZED);
+		} else {
+			int currentLike = commentService.dislike(commentId);
+			mv.addObject(currentLike);
+		}
+
+		return mv;
 	}
 
 	@PostMapping("/update/{commentId}")
