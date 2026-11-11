@@ -17,8 +17,8 @@
                             <div class="nickname">[[${comment.writer}]]</div>
                             <div class="comment_content">[[${comment.content}]]</div>
                             <div class="comment_date">[[${comment.regdate}]]</div>
-                            <button class="btn_like_unlike btn_like_unlike_small" onclick="like(this)">👍</button><span class="like like_unlike_count">[[${comment.like}]]</span>
-                            <button class="btn_like_unlike btn_like_unlike_small" onclick="dislike(this)">👎</button><span class="unlike like_unlike_count">[[${comment.unlike}]]</span>
+                            <button class="btn_like_unlike btn_like_unlike_small" onclick="like(this)">👍</button><span class="like like_unlike_count">[[${comment.likes}]]</span>
+                            <button class="btn_like_unlike btn_like_unlike_small" onclick="dislike(this)">👎</button><span class="unlike like_unlike_count">[[${comment.dislike}]]</span>
                             <button class="comment_btn" onclick="toggleReplyWriter(this)">답글</button>
                             <th:block th:if="${member != null && member.id == comment.memberId}">
                                 <button class="comment_btn edit_writer_trigger" onclick="switchCommentToEditor(this)">수정</button>
@@ -51,7 +51,7 @@
                     </th:block>
 
                     <button class="comment_btn blank_bottom reply_trigger" onclick="loadReply(this)"
-                        url="/community/board/${category}/${postId}/comment/reply/${comment.id}" first>답글 보기</button>
+                        th:attr="url=|/community/board/${category}/${postId}/comment/reply/${comment.id}|" first>답글 보기</button>
                     <!-- 대댓글 -->
                     <div class="comment_reply_list">
                     </div>
