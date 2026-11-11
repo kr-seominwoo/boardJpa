@@ -1,10 +1,29 @@
 package com.board.entity;
 
+import com.board.repository.jpa.comment.CommentDTO;
 import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.util.Date;
 
+@SqlResultSetMapping(
+		name = "CommentDtoMapping",
+		classes = @ConstructorResult(
+				targetClass = CommentDTO.class,
+				columns = {
+						@ColumnResult(name="id", type = Long.class),
+						@ColumnResult(name="parent_id", type = Long.class),
+						@ColumnResult(name="member_id", type = String.class),
+						@ColumnResult(name="writer", type = String.class),
+						@ColumnResult(name="content", type = String.class),
+						@ColumnResult(name="regdate", type = Date.class),
+						@ColumnResult(name="likes" , type = Integer.class),
+						@ColumnResult(name="dislike", type = Integer.class),
+						@ColumnResult(name="level", type = Integer.class),
+						@ColumnResult(name="blind", type = Integer.class)
+				}
+		)
+)
 @Entity(name="comment")
 @DynamicInsert
 public class Comment {
