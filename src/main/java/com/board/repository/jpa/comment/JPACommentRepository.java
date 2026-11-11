@@ -17,6 +17,7 @@ import java.util.Map;
 
 @Repository
 public class JPACommentRepository implements CommentRepository {
+    private final String DTO_MAPPING = "CommentDtoMapping";
 
     private final EntityManager em;
 
@@ -36,48 +37,11 @@ public class JPACommentRepository implements CommentRepository {
 
     @Override
     public Comment findOne(Long commentId) {
-        String sql = "SELECT c FROM comment c where c.id =:commentId";
-        return em.createQuery(sql, Comment.class)
-                .setParameter("commentId", commentId)
-                .getSingleResult();
-//        Connection con = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet rs = null;
-//        Comment comment = null;
-//
-//        try {
-//            con = DataSourceUtils.getConnection(this.dataSource);
-//            preparedStatement = con.prepareStatement(sql);
-//            preparedStatement.setLong(1, commentId);
-//
-//            rs = preparedStatement.executeQuery();
-//            if (rs.next()) {
-//                Long parentId = rs.getLong("PARENT_ID");
-//                Long postId = rs.getLong("POST_ID");
-//                String memberId = rs.getString("MEMBER_ID");
-//                String writer = rs.getString("WRITER");
-//                String content = rs.getString("CONTENT");
-//                Date regdate = rs.getDate("REGDATE");
-//                int like = rs.getInt("LIKE");
-//                int unlike = rs.getInt("LIKE");
-//                int blind = rs.getInt("BLIND");
-//
-//                comment = new Comment(commentId, parentId, postId, memberId, writer, content, regdate, like, unlike, blind);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            close(rs, preparedStatement, con);
-//        }
-//
-//        return comment;
+        return em.find(Comment.class, commentId);
     }
 
     @Override
     public List<CommentDTO> findComments(Long postId, int page) {
-//        String sql = "SELECT * FROM( \r\n" + " SELECT ROWNUM NUM, C.* \r\n" + " FROM (\r\n" + "  SELECT * FROM "
-//                + category + "_COMMENT \r\n" + "  WHERE POST_ID =: postId AND PARENT_ID = 0 \r\n" + "  ORDER BY REGDATE DESC \r\n"
-//                + " ) C \r\n" + ")\r\n" + "WHERE NUM BETWEEN :start AND :end";
         String sql = "select c from comment c where c.postId =:postId and c.parentId = 0 order by c.regdate desc";
         List<Comment> list = em.createQuery(sql, Comment.class)
                 .setParameter("postId", postId)
@@ -86,97 +50,30 @@ public class JPACommentRepository implements CommentRepository {
                 .getResultList();
 
         List<CommentDTO> result = new ArrayList<>();
-        for (int i = 0; i < list.size(); ++i) {
-            Comment c = list.get(i);
-            CommentDTO dto = new CommentDTO(c.getId(), c.getMemberId(), c.getWriter(),
-                    c.getContent(), c.getRegdate(), c.getLikes(),
-                    c.getDislike(), 0, c.getBlind());
-            result.add(dto);
+        for (Comment c : list) {
+            result.add(new CommentDTO(c, 0));
         }
 
         return result;
-
-//        Connection con = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet rs = null;
-//        List<CommentDTO> list = new ArrayList<>();
-//
-//        try {
-//            con = DataSourceUtils.getConnection(this.dataSource);
-//            preparedStatement = con.prepareStatement(sql);
-//            preparedStatement.setLong(1, postId);
-//            preparedStatement.setInt(2, 1 + (page - 1) * CommentConst.COUNT_PER_PAGE);
-//            preparedStatement.setInt(3, page * CommentConst.COUNT_PER_PAGE);
-//
-//            rs = preparedStatement.executeQuery();
-//            while (rs.next()) {
-//                // blind를 entity에 추가해야 함
-//                Long id = rs.getLong("COMMENT_ID");
-//                String memberId = rs.getString("MEMBER_ID");
-//                String writer = rs.getString("WRITER");
-//                String content = rs.getString("CONTENT");
-//                Date regdate = rs.getTimestamp("REGDATE");
-//                int like = rs.getInt("LIKE");
-//                int unlike = rs.getInt("UNLIKE");
-//                int blind = rs.getInt("BLIND");
-//
-//                CommentDTO comment = new CommentDTO(id, memberId, writer, content, regdate, like, unlike, 0, blind);
-//                list.add(comment);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            close(rs, preparedStatement, con);
-//        }
-//
-//        return list;
     }
 
     @Override
     public List<CommentDTO> findReplyComments(Long postId, Long parentId) {
-//        String sql = "SELECT c.*, level as \"level\" \r\n" + "  FROM " + category + "_COMMENT c \r\n"
-//                + "  WHERE POST_ID =:postId \r\n" + "  START WITH PARENT_ID =:parentId \r\n"
-//                + "  CONNECT BY PARENT_ID = PRIOR COMMENT_ID" + "  ORDER BY REGDATE";
-
-        String sql = "";
-        return em.createQuery(sql, CommentDTO.class)
+        String sql = "select c.*, temp.level from comment c , ( \n" +
+                "with recursive temp(id, parentId, path, level) as ( \n" +
+                " select c.id, c.parent_id, concat(LPAD(0, 10, '0'), '/', LPAD(c.id, 10, '0')) as path, 1 as level from comment c where c.parent_id=:parentId and c.post_id=:postId \n" +
+                " union all \n" +
+                " select c.id, c.parent_id, concat(prev.path, '/', LPAD(c.id, 10, '0')) as path, prev.level+1 from comment c \n" +
+                " inner join temp as prev on c.parent_id = prev.id \n" +
+                ") select temp.id, temp.level from temp order by temp.path asc) as temp where c.id = temp.id\n";
+        List<?> list = em.createNativeQuery(sql, DTO_MAPPING)
                 .setParameter("postId", postId)
                 .setParameter("parentId", parentId)
                 .getResultList();
 
-//        Connection con = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet rs = null;
-//        List<CommentDTO> list = new ArrayList<>();
-//
-//        try {
-//            con = DataSourceUtils.getConnection(this.dataSource);
-//            preparedStatement = con.prepareStatement(sql);
-//            preparedStatement.setLong(1, postId);
-//            preparedStatement.setLong(2, parentId);
-//
-//            rs = preparedStatement.executeQuery();
-//            while (rs.next()) {
-//                Long id = rs.getLong("COMMENT_ID");
-//                String memberId = rs.getString("MEMBER_ID");
-//                String writer = rs.getString("WRITER");
-//                String content = rs.getString("CONTENT");
-//                Date regdate = rs.getTimestamp("REGDATE");
-//                int like = rs.getInt("LIKE");
-//                int unlike = rs.getInt("UNLIKE");
-//                int level = rs.getInt("LEVEL");
-//                int blind = rs.getInt("BLIND");
-//
-//                CommentDTO comment = new CommentDTO(id, memberId, writer, content, regdate, like, unlike, level, blind);
-//                list.add(comment);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            close(rs, preparedStatement, con);
-//        }
-//
-//        return list;
+        return list.stream()
+                .map(CommentDTO.class::cast)
+                .toList();
     }
 
     @Override

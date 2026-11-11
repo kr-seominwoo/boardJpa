@@ -80,9 +80,7 @@ public class CommentController {
 		} else {
 			mv.addObject("member", member);
 			mv.setViewName("replyComment");
-			CommentDTO commentDTO = new CommentDTO(comment.getId(), comment.getMemberId(), comment.getWriter(),
-					comment.getContent(), comment.getRegdate(), comment.getLikes(), comment.getDislike(), 0,
-					comment.getBlind());
+			CommentDTO commentDTO = new CommentDTO(comment, 0);
 			mv.addObject("comment", commentDTO);
 		}
 
@@ -93,7 +91,7 @@ public class CommentController {
 	public String list(@PathVariable String category, @PathVariable Long postId, int page, Model model,
 			HttpServletRequest request) {
 		Member member = LoginCheck.getMemberFromSession(request);
-		model.addAttribute("member", member);
+        model.addAttribute("member", member);
 
 		long total = commentService.findCommentTotal(category, postId);
 		long topTotal = commentService.findTopCommentTotal(category, postId);
@@ -102,7 +100,7 @@ public class CommentController {
 		int last = (int) (topTotal % CommentConst.COUNT_PER_PAGE == 0 ? topTotal / CommentConst.COUNT_PER_PAGE
 				: topTotal / CommentConst.COUNT_PER_PAGE + 1);
 		int begin = ((int) Math.ceil((double) page / CommentConst.PAGER) - 1) * CommentConst.PAGER + 1;
-		int end = last <= begin + 4 ? last : begin + 4;
+		int end = Math.min(last, begin + 4);
 
 		model.addAttribute("commentTotal", total);
 		model.addAttribute("commentList", list);
@@ -121,7 +119,7 @@ public class CommentController {
 		Member member = LoginCheck.getMemberFromSession(request);
 		model.addAttribute("member", member);
 
-		List<CommentDTONode> list = commentService.findReplyComments(postId, commentId);
+		List<CommentDTO> list = commentService.findReplyComments(postId, commentId);
 		model.addAttribute("list", list);
 		return "replyCommentList";
 	}

@@ -41,35 +41,8 @@ public class CommentService {
 		return commentRepository.findComments(postId, page);
 	}
 
-	public List<CommentDTONode> findReplyComments(Long postId, Long parentId) {
-		List<CommentDTONode> nodes = new ArrayList<>();
-		List<CommentDTO> list = commentRepository.findReplyComments(postId, parentId);
-		for (int idx = 0, SIZE = list.size(); idx < SIZE; ++idx) {
-			CommentDTO comment = list.get(idx);
-			int level = comment.getLevel();
-			if (level == 1) {
-				CommentDTONode node = new CommentDTONode(comment);
-				nodes.add(node);
-			} else {
-				addCommentDTO(nodes.get(nodes.size() - 1), comment);
-			}
-		}
-
-		return nodes;
-	}
-
-	private void addCommentDTO(CommentDTONode parent, CommentDTO comment) {
-		int parentLevel = parent.getCommentDTO().getLevel();
-		int level = comment.getLevel();
-
-		List<CommentDTONode> children = parent.getChildren();
-		if (level == parentLevel + 1) {
-			CommentDTONode node = new CommentDTONode(comment);
-			children.add(node);
-		} else {
-			int lastIndex = children.size() - 1;
-			addCommentDTO(children.get(lastIndex), comment);
-		}
+	public List<CommentDTO> findReplyComments(Long postId, Long parentId) {
+        return commentRepository.findReplyComments(postId, parentId);
 	}
 
 	public Map<Long, Integer> findCommentCounts(List<Post> postList, String category) {
@@ -92,7 +65,7 @@ public class CommentService {
 		CommentDTO result = null;
 		if(commentRepository.updateContent(category, commentId, content) == 1) {
 			Comment comment = commentRepository.findOne(commentId);
-			result = new CommentDTO(comment.getId(), comment.getMemberId(), comment.getWriter(), comment.getContent(), comment.getRegdate(), comment.getLikes(), comment.getDislike(), 0, comment.getBlind());
+			result = new CommentDTO(comment, 0);
 		}
 
 		return result;
