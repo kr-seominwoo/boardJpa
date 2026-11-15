@@ -33,6 +33,7 @@ public class CommentDTO {
 	public CommentDTO(Comment from, int level) {
 		this.id = from.getId();
 		this.parentId = from.getParentId();
+		this.memberId = from.getMemberId();
 		this.writer = from.getWriter();
 		this.content = from.getContent();
 		this.regdate = from.getRegdate();
