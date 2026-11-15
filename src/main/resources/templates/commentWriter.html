@@ -1,0 +1,14 @@
+<html xmlns:th=http://www.thymeleaf.org>
+<div th:fragment="CommentWriterFragment(member, comment, hidden)" th:class="|comment_writer ${hidden}|">
+    <th:block th:if="${member != null && member.id != null}">
+        <div class="nickname">[[${member.nickname}]]</div>
+        <textarea class="comment_input_area" rows="1" style="white-space:pre;" placeholder="댓글을 입력하세요" onkeydown="resize(this)"></textarea>
+        <div class="comment_btn_box">
+            <button class="comment_btn main_comment_btn" onclick="addComment(this)">댓글 입력</button>
+        </div>
+    </th:block>
+    <th:block th:unless="${member != null && member.id != null}">
+        <textarea class="comment_input_area" placeholder="로그인을 해주세요" onclick="location.href='/community/members/login?redirectURL=/board/${category}/${postId}'"></textarea>
+    </th:block>
+</div>
+</html>
