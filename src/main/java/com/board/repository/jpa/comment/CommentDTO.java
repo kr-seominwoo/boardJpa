@@ -5,17 +5,17 @@ import com.board.entity.Comment;
 import java.util.Date;
 
 public class CommentDTO {
-	private Long id;
+	private final Long id;
 
-	private Long parentId;
-	private String memberId;
-	private String writer;
-	private String content;
-	private Date regdate;
-	private int likes;
-	private int dislike;
-	private int level;
-	private int blind;
+	private final Long parentId;
+	private final String memberId;
+	private final String writer;
+	private final String content;
+	private final Date regdate;
+	private final int likes;
+	private final int dislike;
+	private final int level;
+	private final int blind;
 
 	public CommentDTO(Long id, Long parentId, String memberId, String writer, String content, Date regdate, int likes, int dislike, int level, int blind) {
 		this.id = id;
