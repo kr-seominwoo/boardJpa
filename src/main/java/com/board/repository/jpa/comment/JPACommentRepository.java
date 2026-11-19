@@ -51,7 +51,7 @@ public class JPACommentRepository implements CommentRepository {
 
         List<CommentDTO> result = new ArrayList<>();
         for (Comment c : list) {
-            result.add(new CommentDTO(c, 0));
+            result.add(new CommentDTO(c));
         }
 
         return result;

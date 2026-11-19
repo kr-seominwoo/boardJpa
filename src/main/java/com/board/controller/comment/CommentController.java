@@ -35,6 +35,28 @@ public class CommentController {
 		this.commentService = commentService;
 	}
 
+	@ResponseBody
+	@PostMapping("/create")
+	public ModelAndView createComment(@PathVariable String category, @PathVariable Long postId, Long parentId, String content, ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Member member = LoginCheck.getMemberFromSession(request);
+		if (!LoginCheck.isLoggedIn(member)) {
+			mv.addObject("message", CommentErrorMessage.LOGIN_ERROR);
+			mv.setViewName("error");
+			mv.setStatus(HttpStatus.UNAUTHORIZED);
+			return mv;
+		}
+
+		CommentForm commentForm = new CommentForm(postId, parentId, category, content);
+		CommentDTO dto = commentService.createComment(member, commentForm);
+		mv.addObject("comment", dto);
+		mv.setViewName("comment");
+		return mv;
+	}
+
+	/*
+		댓글과 대댓글 추가를 나눈 버전
+		필요없어질 경우 삭제할 예정
+
 	@PostMapping("/create")
 	public ModelAndView createComment(@PathVariable String category, @PathVariable Long postId, String content, ModelAndView mv, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Member member = LoginCheck.getMemberFromSession(request);
@@ -86,6 +108,8 @@ public class CommentController {
 
 		return mv;
 	}
+
+	 */
 
 	@GetMapping("/list")
 	public String list(@PathVariable String category, @PathVariable Long postId, int page, Model model,
