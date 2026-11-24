@@ -48,6 +48,7 @@ public class CommentController {
 
 		CommentForm commentForm = new CommentForm(postId, parentId, category, content);
 		CommentDTO dto = commentService.createComment(member, commentForm);
+		mv.addObject("member", member);
 		mv.addObject("comment", dto);
 		mv.setViewName("comment");
 		return mv;
