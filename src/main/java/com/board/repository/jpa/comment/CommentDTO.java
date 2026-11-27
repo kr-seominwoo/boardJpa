@@ -14,10 +14,9 @@ public class CommentDTO {
 	private final Date regdate;
 	private final int likes;
 	private final int dislike;
-	private final int level;
 	private final int blind;
 
-	public CommentDTO(Long id, Long parentId, String memberId, String writer, String content, Date regdate, int likes, int dislike, int level, int blind) {
+	public CommentDTO(Long id, Long parentId, String memberId, String writer, String content, Date regdate, int likes, int dislike, int blind) {
 		this.id = id;
 		this.parentId = parentId;
 		this.memberId = memberId;
@@ -26,11 +25,10 @@ public class CommentDTO {
 		this.regdate = regdate;
 		this.likes = likes;
 		this.dislike = dislike;
-		this.level = level;
 		this.blind = blind;
 	}
 
-	public CommentDTO(Comment from, int level) {
+	public CommentDTO(Comment from) {
 		this.id = from.getId();
 		this.parentId = from.getParentId();
 		this.memberId = from.getMemberId();
@@ -40,7 +38,6 @@ public class CommentDTO {
 		this.likes = from.getLikes();
 		this.dislike = from.getDislike();
 		this.blind = from.getBlind();
-		this.level = level;
 	}
 
 	public Long getId() {
@@ -73,10 +70,6 @@ public class CommentDTO {
 
 	public int getDislike() {
 		return dislike;
-	}
-
-	public int getLevel() {
-		return level;
 	}
 
 	public int getBlind() {
