@@ -42,9 +42,9 @@ function processError(response, category, postId) {
 	}
 }
 
-function addComment(target) {
-	const category = $('#category').text();
-	const postId = $('#post_id').text();
+function addComment(target, parentId) {
+	const category = $("#category").text();
+	const postId = $("#post_id").text();
 	const content = $(target).parent().parent().children(".comment_input_area").val();
 	const url = "/community/board/"+ category + "/" + postId +"/comment/create";
 
@@ -52,10 +52,19 @@ function addComment(target) {
 	$.ajax({
 		type : 'post',
 		url : url,
-		data: {"content" : content},
+		data: {"content" : content, "parentId" : parentId},
 		dataType: 'html',
 		success : function(data) {
-			commentBox.html(data);
+		    if (parentId == 0) {
+		        loadComment(category, postId, 1);
+		    } else {
+		        $(target).closest(".comment_writer").addClass("hidden");
+		        const replyList = $(target).closest(".comment_item").find(".comment_reply_list");
+		        replyList.append(data);
+		    }
+
+		    const total = $(".comment_header").children();
+            total.text(Number(total.text()) + 1);
 		}, error : function(response) {
 			processError(response, category, postId);
 		}
