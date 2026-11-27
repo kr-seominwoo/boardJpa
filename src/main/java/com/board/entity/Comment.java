@@ -36,7 +36,6 @@ public class Comment {
 	private String writer;
 	private String content;
 	private Date regdate;
-
 	private int likes;
 	private int dislike;
 	private int blind;
