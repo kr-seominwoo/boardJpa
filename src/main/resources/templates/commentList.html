@@ -6,7 +6,7 @@
     <th:block th:if="${commentList != null}">
     <li class="comment_group" th:each="comment : ${commentList}">
         <!-- 댓글 -->
-        <div th:replace="~{/comment :: CommentFragment(member=${member}, comment=${comment})}"></div>
+        <div th:replace="~{/comment :: CommentFragment(member=${member}, comment=${comment}, category=${category}, postId=${postId})}"></div>
     </li>
     </th:block>
 </ul>
@@ -23,5 +23,6 @@
         <li th:if="${lastPage > end}" id="next"  class="page" onclick="loadComment('${category}', ${postId}, ${end + 1})">&gt;</li>
     </ul>
 </div>
-<div th:replace="~{/commentWriter :: CommentWriterFragment(member=${member}, comment=${comment}, hidden='')}"></div>
+<div class="hidden">``</div>
+<div th:replace="~{/commentWriter :: CommentWriterFragment(member=${member}, comment=${comment}, parentId=0, hidden='')}"></div>
 </html>
